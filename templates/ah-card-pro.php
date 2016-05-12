@@ -1,5 +1,5 @@
 <style>
-    #ahcardbox {width:100%; max-width: 1168px; padding: 20px; background-color: #869f07; min-height: 150px; color:white; box-sizing: border-box;
+    #ahcardbox {width:100%; max-width: 1168px; padding: 20px; background-color: #339900; min-height: 150px; color:white; box-sizing: border-box;
 }
 </style>
 

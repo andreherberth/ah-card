@@ -89,8 +89,8 @@ function ah_card_setmeta($user_id) {
     $card_number = ah_card_number($card_id);
     
     //Making sure the card ID result is indeed correct before putting it into the meta slot. 
-    if (!strlen($card_number) = 6) {
-        
+    if (strlen($card_number) != 6) {
+          
     } else {
         add_user_meta( $user_id, '_ah_card_number', $card_number, true );   
     }
@@ -131,14 +131,14 @@ function ah_card_activate(){
     dbDelta( $sql );
 }
     
-function ah_card_set_user_role) {
+function ah_card_set_user_role($user_id, $role) {
     
     $ah_s2roles = array("s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4");
 
     if (!in_array($role, $ah_s2roles)) {
         //TODO: Add code that removes 
     } else {
-        
+        ah_card_setpro($user_id);
     }
 
 }

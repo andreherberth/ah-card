@@ -6,7 +6,7 @@ register_activation_hook( __FILE__, 'ah_card_activate' );
 // Then we initializing adding card number on new PRO memberships.
 
 
-add_action( 'user_register', 'ah_card_setnum', 10, 1 );
+add_action( 'set_user_role', 'ah_card_set_user_role', 10, 1 );
 // Displaying in wordpress built in profile editor
 add_action( 'show_user_profile', 'ah_card_dashboard_meta' );
 add_action( 'edit_user_profile', 'ah_card_dashboard_meta' );
