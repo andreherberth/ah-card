@@ -6,9 +6,9 @@ require_once 'functions.php';
 // Then we initializing adding card number on new PRO memberships.
 
 
-add_action( 'set_user_role', 'ah_card_set_user_role', 10, 3 );
-add_action( 'add_user_role', 'ah_card_set_user_role', 10, 3 );
-add_action( 'remove_user_role', 'ah_card_set_user_role', 10, 3 );
+add_action( 'set_user_role', 'ah_card_set_user_role', 10, 2 );
+add_action( 'add_user_role', 'ah_card_set_user_role', 10, 2 );
+add_action( 'remove_user_role', 'ah_card_set_user_role', 10, 2 );
 
 // Displaying in wordpress built in profile editor
 add_action( 'show_user_profile', 'ah_card_dashboard_meta' );

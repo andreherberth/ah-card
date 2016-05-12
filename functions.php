@@ -72,7 +72,7 @@ function ah_card_setpro($user_id) {
 	$wpdb->insert( 
 		$table_name, 
 		array( 
-			'id' => '', 
+			'cardid' => '', 
 			'uid' => $user_id, 
 			'active' => TRUE, 
 		) 
