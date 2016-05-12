@@ -1,6 +1,6 @@
 <?php
 
-function ah_card_profile_shortcode {
+function ah_card_profile_shortcode() {
     // Utilizing template files and allowing edits in themes/child themes. 
     
     if ( current_user_can('s2member_level1') || current_user_can('s2member_level2') || current_user_can('s2member_level3') || current_user_can('s2member_level4')) {
