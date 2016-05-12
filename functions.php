@@ -86,6 +86,7 @@ function ah_card_setmeta($user_id) {
     $table_name = $wpdb->prefix . "ahcardnum"; 
     
     $card_id = $wpdb->get_var( "SELECT cardid FROM $table_name WHERE uid = $user_id" );
+    
     $card_number = ah_card_number($card_id);
     
     //Making sure the card ID result is indeed correct before putting it into the meta slot. 

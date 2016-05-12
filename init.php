@@ -1,7 +1,7 @@
 <?php
 require_once 'functions.php';
 // Creating the correct database tables. 
-register_activation_hook( __FILE__, 'ah_card_activate' );
+
 
 // Then we initializing adding card number on new PRO memberships.
 
