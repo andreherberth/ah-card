@@ -24,4 +24,7 @@ $myUpdateChecker = new $className(
 
 /* Then we load the init script. All code will reside there.  */
 require 'init.php';
+//Registering the activation hook. Installs the plugin. 
+
+register_activation_hook( __FILE__, 'ah_card_activate' );
 ?>
