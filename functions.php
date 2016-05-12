@@ -65,11 +65,9 @@ function ah_card_number($card_id) {
 function ah_card_setpro($user_id) {
      /* To be used as hook or syncing the plugin. */
      //   add_user_meta( $user_id, '_ah_card_number', ah_card_number($user_id), true );
-    
-    
-    global $wpdb
+    global $wpdb;
 	
-	$table_name = $wpdb->prefix . 'ahcardnum';
+	$table_name = $wpdb->prefix . "ahcardnum";
 	
 	$wpdb->insert( 
 		$table_name, 
