@@ -133,7 +133,7 @@ function ah_card_activate(){
     
 function ah_card_set_user_role($user_id, $role) {
     
-    $ah_s2roles = array("s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4");
+    $ah_s2roles = array("s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4", "Contributor");
 
     if (!in_array($role, $ah_s2roles)) {
         //TODO: Add code that removes 
