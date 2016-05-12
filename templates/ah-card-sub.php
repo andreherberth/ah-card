@@ -11,5 +11,4 @@
 	<center><a href="https://greenkardpro.com/benefits/join-us/pro-membership" target="_parent" class="dt-sc-button   medium  green   "><span data-hover="Get The Card Now">Get The Card Now</span></a></center>
 </div>
 <div id="ahpartners">
-Featured partners will be displayed here soon!
 </div>
