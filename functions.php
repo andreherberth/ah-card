@@ -138,8 +138,22 @@ function ah_card_set_user_role($this_id, $role) {
 
     if (!in_array($role, $ah_s2roles)) {
         //TODO: Add code that removes 
+        delete_user_meta( $this_id, '_ah_card_number' );
+        
+        
+        
     } else {
         ah_card_setpro($this_id);
     }
 
+}
+
+function ah_card_admin_menu(){
+        add_menu_page( 'AH-Card Options', 'AH-Card', 'manage_options', 'ah-card', 'ah_card_admin_panel' );
+}
+
+function ah_card_admin_panel(){
+    <h3>Information</h3>
+    <p>This plugin creates an unique number whenever a member gets added to a spesific role. In this case, based on S2Members.</p>
+    <h3>Uninstall Options</h3>
 }
