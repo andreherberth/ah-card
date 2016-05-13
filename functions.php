@@ -153,7 +153,34 @@ function ah_card_admin_menu(){
 }
 
 function ah_card_admin_panel(){
-    <h3>Information</h3>
-    <p>This plugin creates an unique number whenever a member gets added to a spesific role. In this case, based on S2Members.</p>
-    <h3>Uninstall Options</h3>
+    ?>
+    $tab = (!empty($_GET['tab']))? esc_attr($_GET['tab']) : 'first';
+    page_tabs($tab);
+
+    if($tab == 'welcome' ) { ?>
+        <h1>Welcome</h1>
+        <p>Welcome to the AH-Card Plugin. - This plugin generates unique card numbers for members when their role changes.</p>
+    <?php
+    }
+    elseif($tab == 'settings' ) {
+    ?>    <h1>Settings</h1>
+        <p>Comming soon. </p>
+    <?php }
+}
+
+function ah_card_admin_pages($current = "welcome") {
+    
+    $tabs = array(
+        'welcome'   => __("Welcome", 'ah-card-domain'), 
+        'settings'  => __("Settings", 'ah-card-domain')
+    );
+    $html =  '<h2 class="nav-tab-wrapper">';
+    foreach( $tabs as $tab => $name ){
+        $class = ($tab == $current) ? 'nav-tab-active' : '';
+        $html .=  '<a class="nav-tab ' . $class . '" href="?page=ah-card&tab=' . $tab . '">' . $name . '</a>';
+    }
+    $html .= '</h2>';
+    echo $html;
+}
+    
 }
