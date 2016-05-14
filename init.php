@@ -15,6 +15,6 @@ add_shortcode ('ah-profile', 'ah_card_profile_shortcode');
 
 //Admin panel for admin users. Will Contain function to sync all users. Especially good if we are changing the number scheme. 
 add_action('admin_menu', 'ah_card_admin_menu');
-add_action( 'admin_init', 'ah-card-admin-settings' );
+add_action( 'admin_init', 'ah-card-update-settings' );
 //TODO: Add sync button. Secondly, add field to choose roles that should get the cards. 
 

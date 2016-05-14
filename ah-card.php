@@ -3,7 +3,7 @@
 Plugin Name: AH-Card
 Plugin URI: https://github.com/andreherberth/ahcard
 Description: Creates an unique card number for PRO members based on role. 
-Version: 0.2.2
+Version: 0.2.3
 Author: André Herberth
 Author URI: http://fiverr.com/andreherberth
 License: GPLv3

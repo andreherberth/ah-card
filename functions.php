@@ -153,18 +153,22 @@ function ah_card_admin_menu(){
 }
 
 function ah_card_admin_panel(){
-    ?>
     $tab = (!empty($_GET['tab']))? esc_attr($_GET['tab']) : 'first';
-    page_tabs($tab);
+    ah_card_admin_pages($tab);
 
     if($tab == 'welcome' ) { ?>
+	<style>#ahwrap{background-color:#ffffff; padding: 20px 0 20px 20px; box-sizing: border-box; margin-top:0px;}</style>
+	<div id="ahwrap">
         <h1>Welcome</h1>
         <p>Welcome to the AH-Card Plugin. - This plugin generates unique card numbers for members when their role changes.</p>
-    <?php
+	</div>    
+<?php
     }
     elseif($tab == 'settings' ) {
     ?> 
-          <h1>settings</h1>
+        <style>#ahwrap{background-color:#ffffff; padding: 20px 0 20px 20px; box-sizing: border-box; margin-top:0px;}</style>
+	<div id="ahwrap">  
+	<h1>Card Settings</h1>
           <form method="post" action="options.php">
             <?php settings_fields( 'ah-card-admin-settings' ); ?>
             <?php do_settings_sections( 'ah-card-admin-settings' ); ?>
@@ -172,12 +176,15 @@ function ah_card_admin_panel(){
               <tr valign="top">
               <th scope="row">Card Name</th>
               <td><input type="text" name="ah-card-name" value="<?php echo get_option( 'ah-card-name' ); ?>"/></td>
-              <th scope="row">Generate for the following roles sepearted by comma</th>
-              <td><input type="text" name="ah-card-roles" value="<?php echo get_option( 'ah-card-roles' ); ?>"/></td>
               </tr>
+                <tr valign="top">
+                <th scope="row">Generate for the following roles sepearted by comma</th>
+              <td><input type="text" name="ah-card-roles" value="<?php echo get_option( 'ah-card-roles' ); ?>"/></td>
+                </tr>
             </table>
             <?php submit_button(); ?>
           </form>
+	</div>
     <?php }
 }
 
@@ -197,7 +204,7 @@ function ah_card_admin_pages($current = "welcome") {
 }
 
 if( !function_exists("ah_card_update_settings") ) {
-function update_extra_post_info() {
+function ah_card_update_settings() {
     register_setting( 'ah-card-admin-settings', 'ah-card-name' );
     register_setting( 'ah-card-admin-settings', 'ah-card-roles' );
 }
