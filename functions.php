@@ -209,3 +209,25 @@ function ah_card_update_settings() {
     register_setting( 'ah-card-admin-settings', 'ah-card-roles' );
 }
 }
+
+function ah_card_user_sync() {
+    
+    //Temporary workaround for S2Members. Will use plugin options soon.
+    $args = array(
+	'role__in' => array( "s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4" )
+    );
+    $user_query = new WP_User_Query( $args );
+    
+    $users = $user_query->get_results();
+    
+    foreach($users as $user) {
+        
+        $ah_uid = get_userdata( $user->ID );
+        ah_card_setpro($ah_uid);
+        
+    }
+    
+     
+    
+    
+}
