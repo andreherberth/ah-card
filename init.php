@@ -18,4 +18,4 @@ add_action('admin_menu', 'ah_card_admin_menu');
 add_action( 'admin_init', 'ah_card_update_settings' );
 //TODO: Add sync button. Secondly, add field to choose roles that should get the cards. 
 add_action( 'admin_footer', 'ah_card_sync_javascript' );
-dd_action( 'wp_ajax_ah_card_user_sync', 'ah_card_user_sync' );
+add_action( 'wp_ajax_ah_card_user_sync', 'ah_card_user_sync' );
