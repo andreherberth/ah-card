@@ -105,7 +105,7 @@ class Ah_Card_Admin {
     }
 
     public function ah_card_admin_panel(){
-        include ( plugin_dir_url( __FILE__ ) . 'partials/ah-card-admin-panel.php' );
+        include 'partials/ah-card-admin-panel.php';
     }
 
     public function ah_card_admin_pages($current = "welcome") {
@@ -147,12 +147,11 @@ class Ah_Card_Admin {
         $users = $user_query->get_results();
         $ahnumsynced = 0;
         foreach($users as $user) {
-
             //$ah_uid = get_userdata( $user->ID );
             $this->ah_card_setpro( $user->ID );
             $ahnumsynced++;
         }
-         echo "Number of users synced: " . $ahnumsynced;
+         echo "Number of cards synced: " . $ahnumsynced;
         wp_die();
     }
 
@@ -172,7 +171,7 @@ class Ah_Card_Admin {
     
     private function ah_card_setpro($user_id) {
         global $wpdb;
-
+        /*
         $table_name = $wpdb->prefix . "ahcardnum";
         //Needs to be fixed!
         $wpdb->insert( 
@@ -183,7 +182,14 @@ class Ah_Card_Admin {
                 'active' => TRUE, 
             ) 
         );
-
+        */
+        $sql = "INSERT INTO {$wpdb->prefix}ahcardnum (cardid,uid,active) VALUES ('',{$user_id},TRUE) ON DUPLICATE KEY UPDATE active=TRUE; ";
+        // var_dump($sql); // debug
+        $sql = $wpdb->prepare($sql);
+        // var_dump($sql); // debug
+        $wpdb->query($sql);
+        
+        //Update Meta Information with the correct card number. 
         $this->ah_card_setmeta($user_id);
     }
     
@@ -214,6 +220,7 @@ class Ah_Card_Admin {
         </table>
         <?php
     }
+    
     private function ah_card_number($card_id) {
     
         $ah_sl = strlen($card_id);
@@ -251,4 +258,16 @@ class Ah_Card_Admin {
         return $output;
 }
     
+    public function ah_card_set_user_role($this_id, $role) {
+    
+        $ah_s2roles = array("s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4", "Contributor");
+
+        if (!in_array($role, $ah_s2roles)) {
+            //TODO: Add code that removes 
+            delete_user_meta( $this_id, '_ah_card_number' );
+        } else {
+            $this->ah_card_setpro($this_id);
+        }
+    }
+
 }

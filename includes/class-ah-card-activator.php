@@ -20,10 +20,11 @@
  * @subpackage Ah_Card/includes
  * @author     Andre Herberth <andre.thoresen@gmail.com>
  */
+
 class Ah_Card_Activator {
 
 	/**
-	 * Short Description. (use period)
+	 * Short Description.
 	 *
 	 * Long Description.
 	 *
@@ -32,12 +33,14 @@ class Ah_Card_Activator {
 	public static function activate() {
         global $wpdb;
         $table_name = $wpdb->prefix . "ahcardnum"; 
-
-        $sql = "CREATE TABLE $table_name (
-        cardid mediumint(9) NOT NULL AUTO_INCREMENT,
+        $charset_collate = $wpdb->get_charset_collate();
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        cardid mediumint(9) NOT NULL AUTO_INCREMENT, 
         uid mediumint(9) NOT NULL,
         active bool,
-        UNIQUE KEY cardid (cardid)) $charset_collate;";
+        UNIQUE(uid),
+        PRIMARY KEY(cardid)
+        ) $charset_collate;";
 
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         dbDelta( $sql );
