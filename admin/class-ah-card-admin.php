@@ -99,5 +99,156 @@ class Ah_Card_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ah-card-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+    
+    public function ah_card_admin_menu(){
+        add_menu_page( 'AH-Card Options', 'AH-Card', 'manage_options', 'ah-card', array(&$this, 'ah_card_admin_panel') );
+    }
 
+    public function ah_card_admin_panel(){
+        include ( plugin_dir_url( __FILE__ ) . 'partials/ah-card-admin-panel.php' );
+    }
+
+    public function ah_card_admin_pages($current = "welcome") {
+
+        $tabs = array(
+            'welcome'   => __("Welcome", 'ah-card-domain'), 
+            'settings'  => __("Settings", 'ah-card-domain'),
+            'sync' => __("Sync", "ah-card-domain")
+        );
+        $html =  '<h2 class="nav-tab-wrapper">';
+        foreach( $tabs as $tab => $name ){
+            $class = ($tab == $current) ? 'nav-tab-active' : '';
+            $html .=  '<a class="nav-tab ' . $class . '" href="?page=ah-card&tab=' . $tab . '">' . $name . '</a>';
+        }
+        $html .= '</h2>';
+        echo $html;
+    }
+
+
+    public function ah_card_update_settings() {
+        register_setting( 'ah-card-admin-settings', 'ah-card-name' );
+        register_setting( 'ah-card-admin-settings', 'ah-card-roles' );
+    }
+    
+    /*
+
+    Below is everything related to User Sync option in control panel. 
+
+    */
+
+    public function ah_card_user_sync() {
+
+        //Temporary workaround for S2Members. Will use plugin options soon.
+        $args = array(
+        'role__in' => array( "s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4" )
+        );
+        $user_query = new WP_User_Query( $args );
+
+        $users = $user_query->get_results();
+        $ahnumsynced = 0;
+        foreach($users as $user) {
+
+            //$ah_uid = get_userdata( $user->ID );
+            $this->ah_card_setpro( $user->ID );
+            $ahnumsynced++;
+        }
+         echo "Number of users synced: " . $ahnumsynced;
+        wp_die();
+    }
+
+    public function ah_card_sync_javascript() { ?>
+        <script type="text/javascript" >
+        jQuery("#ahsyncbtn").click(function($) {
+            var data = {
+                'action': 'ah_card_user_sync',
+            };
+            // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+            jQuery.post(ajaxurl, data, function(response) {
+                alert('Got this from the server: ' + response);
+            });
+        });
+        </script> <?php
+    }
+    
+    private function ah_card_setpro($user_id) {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . "ahcardnum";
+        //Needs to be fixed!
+        $wpdb->insert( 
+            $table_name, 
+            array( 
+                'cardid' => '', 
+                'uid' => $user_id, 
+                'active' => TRUE, 
+            ) 
+        );
+
+        $this->ah_card_setmeta($user_id);
+    }
+    
+    function ah_card_setmeta($user_id) { 
+        global $wpdb;
+        $table_name = $wpdb->prefix . "ahcardnum"; 
+
+        $card_id = $wpdb->get_var( "SELECT cardid FROM $table_name WHERE uid = $user_id" );
+
+        $card_number = $this->ah_card_number($card_id);
+
+        //Making sure the card ID result is indeed correct before putting it into the meta slot. 
+        if (strlen($card_number) != 6) {
+
+        } else {
+            add_user_meta( $user_id, '_ah_card_number', $card_number, true );   
+        }
+    }
+
+    public function ah_card_dashboard_meta( $ah_c_user ) {
+        ?>
+        <h3>GreenKardPro Card</h3>
+        <table class="form-table">
+            <tr>
+                <th><label>Your GreenKardPro Number</label></th>
+                <td><input type="text" value="<?php echo get_user_meta( $ah_c_user->ID, '_ah_card_number', true ); ?>" class="regular-text" readonly=readonly /></td>
+            </tr>
+        </table>
+        <?php
+    }
+    private function ah_card_number($card_id) {
+    
+        $ah_sl = strlen($card_id);
+        
+        switch ($ah_sl) {
+            case 0:
+                return "Error: UserID unknown";
+                break;
+            case 1:
+                $output = "50000";
+                $output .= $card_id;
+                break;
+            case 2:
+                $output = "5000";
+                $output .= $card_id;
+                break;
+            case 3:
+                $output = "500";
+                $output .= $card_id;
+                break;
+            case 4:
+                $output = "50";
+                $output .= $card_id;
+                break;
+            case 5:
+                $output = "5";
+                $output .= $card_id;
+                break;
+            case 6:
+                $output = $card_id;
+                break;
+            default: $output = "An error occured. Number could not be generated";
+        }
+        
+        return $output;
+}
+    
 }
