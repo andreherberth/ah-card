@@ -156,16 +156,16 @@ class Ah_Card {
         $this->loader->add_action( 'admin_menu', $plugin_admin, 'ah_card_admin_menu' );
        	$this->loader->add_action( 'admin_init', $plugin_admin, 'ah_card_update_settings' );
         $this->loader->add_action( 'admin_footer', $plugin_admin, 'ah_card_sync_javascript' );
-        $this->loader->add_action( 'wp_ajax_ah_card_user_sync', $plugin_admin, 'Ah_Card_Admin::ah_card_user_sync' );    
+        $this->loader->add_action( 'wp_ajax_ah_card_user_sync', $plugin_admin, 'ah_card_user_sync' );    
         
         // Starting the Memberchange hooks. 
-        $this->loader->add_action( 'set_user_role', $plugin_admin, 'Ah_Card_Admin::ah_card_set_user_role' );
-        $this->loader->add_action( 'add_user_role', $plugin_admin, 'Ah_Card_Admin::ah_card_set_user_role' );
-        $this->loader->add_action( 'remove_user_role', $plugin_admin, 'Ah_Card_Admin::ah_card_set_user_role' );
+        $this->loader->add_action( 'set_user_role', $plugin_admin, 'ah_card_set_user_role' );
+        $this->loader->add_action( 'add_user_role', $plugin_admin, 'ah_card_set_user_role' );
+        $this->loader->add_action( 'remove_user_role', $plugin_admin, 'ah_card_set_user_role' );
 
         // Displaying card number in WP's built in profile editor.
-        $this->loader->add_action( 'show_user_profile', $plugin_admin, 'Ah_Card_Admin::ah_card_dashboard_meta' );
-        $this->loader->add_action( 'edit_user_profile', $plugin_admin, 'Ah_Card_Admin::ah_card_dashboard_meta' );
+        $this->loader->add_action( 'show_user_profile', $plugin_admin, 'ah_card_dashboard_meta' );
+        $this->loader->add_action( 'edit_user_profile', $plugin_admin, 'ah_card_dashboard_meta' );
 
                     
 	}
@@ -183,7 +183,8 @@ class Ah_Card {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'ah_card_profile_shortcode' )
+        $this->loader->add_action( 'init', $plugin_public, 'register_shortcodes' );
 	}
 
 	/**
