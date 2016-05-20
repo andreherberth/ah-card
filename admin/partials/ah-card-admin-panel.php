@@ -15,8 +15,7 @@
 // This file should primarily consist of HTML with a little bit of PHP
 
 $tab = (!empty($_GET['tab']))? esc_attr($_GET['tab']) : 'welcome';
-        ah_card_admin_pages($tab);
-
+        $this->ah_card_admin_pages($tab);
         if($tab == 'welcome' ) { ?>
         <style>#ahwrap{background-color:#ffffff; padding: 20px 0 20px 20px; box-sizing: border-box; margin-top:0px;}</style>
         <div id="ahwrap">
