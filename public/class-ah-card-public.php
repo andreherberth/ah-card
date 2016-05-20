@@ -137,8 +137,7 @@ class Ah_Card_Public {
         }
     }
     
-    public function register_shortcodes() {
+    public function register_shortcodes() {        
         add_shortcode( 'ah-profile', array( $this, 'ah_card_profile_shortcode') );
     }
-
 }
