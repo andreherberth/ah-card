@@ -269,5 +269,44 @@ class Ah_Card_Admin {
             $this->ah_card_setpro($this_id);
         }
     }
+    private function ah_card_list_roles(){ 
+    ?>
+        <table class="wp-list-table widefat fixed striped users" style="width:300px;"  cellspacing="0">
+            <thead>
+                <tr>
+                    <th id="cb" class="manage-column column-columnname" scope="col">Role Name</th>
+                    <th id="columnname" class="manage-column column-columnname" scope="col">Role Slug (Use This)</th>
+                </tr>
+            </thead>
+
+            <tfoot>
+                <tr>
+                    <th class="manage-column column-columnname" scope="col">Role Name</th>
+                    <th class="manage-column column-columnname" scope="col">Role Slug (Use This)</th>
+                </tr>
+            </tfoot>
+            <tbody>
+        <?php
+        
+        global $wp_roles;
+        $table_class = "alternate";
+        foreach ( $wp_roles->roles as $key=>$value ) { ?>
+              <tr class="<?php $table_class ?>">
+                <td class="column-columnname"><?php echo $value['name']; ?></td>
+                <td class="column-columnname"><?php echo $key; ?></td>
+              </tr>
+                <?php 
+                    if($table_class == "") {
+                      $table_class = "alternate";  
+                    }else{
+                        $table_class = "";
+                    }
+                        
+                    
+            }
+        ?> 
+    </tbody></table> <?php
+    }
+
 
 }

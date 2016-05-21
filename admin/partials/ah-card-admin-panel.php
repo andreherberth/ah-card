@@ -32,18 +32,31 @@ $tab = (!empty($_GET['tab']))? esc_attr($_GET['tab']) : 'welcome';
               <form method="post" action="options.php">
                 <?php settings_fields( 'ah-card-admin-settings' ); ?>
                 <?php do_settings_sections( 'ah-card-admin-settings' ); ?>
-                <table class="form-table">
-                  <tr valign="top">
-                  <th scope="row">Card Name</th>
-                  <td><input type="text" name="ah-card-name" value="<?php echo get_option( 'ah-card-name' ); ?>"/></td>
-                  </tr>
-                    <tr valign="top">
-                    <th scope="row">Generate for the following roles sepearted by comma</th>
-                  <td><input type="text" name="ah-card-roles" value="<?php echo get_option( 'ah-card-roles' ); ?>"/></td>
+                
+                <table class="wp-list-table widefat fixed striped users">
+                    <thead>
+                    <th>Option Name</th>
+                    <th>Settings</th>
+                    <th>Description</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Your Card Name</td>
+                        <td><input size="35" type="text" name="ah-card-name" value="<?php echo get_option( 'ah-card-name' ); ?>"/></td>    
+                        <td>This name will be used on several occations troughout this website.</td>
                     </tr>
+                    <tr>
+                        <td>Card Roles</td>
+                        <td><input size="35" type="text" name="ah-card-roles" value="<?php echo get_option( 'ah-card-roles' ); ?>"/></td> 
+                        <td>Enter Roles seperated by Comma. The members of these roles will get a card number, either when their role changes, or when SYNC is pressed.</td>
+                    </tr>
+                    </tbody>
                 </table>
                 <?php submit_button(); ?>
               </form>
+            <div><h1>List of Available Roles:</h1></div>
+            <?php $this->ah_card_list_roles(); ?>
+            
         </div>
         <?php } elseif ($tab == 'sync' ) { ?>
             <p>Syncronize Current PRO members by pressing the button below. </p>
