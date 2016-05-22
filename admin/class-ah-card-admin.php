@@ -136,12 +136,12 @@ class Ah_Card_Admin {
     * This makes it easier to generate the array needed when hooking into role change event, and when syncing cardnumbers. 
     *
     **/
-    private function ah_card_admin_roleval($rolestring) {
+    public function ah_card_admin_roleval($input) {
         
-        if(empty($rolestring)) {
+        if(empty($input)) {
           $output = "no,roles,defined";             
         } else {
-          $output = trim($rolestring);     
+	  $output = preg_replace('/\s+/','',$input);    
         }   
         
         return $output;
@@ -158,11 +158,9 @@ class Ah_Card_Admin {
     public function ah_card_user_sync() {
 
         //Temporary workaround for S2Members. Will use plugin options soon.
-        /*
+        
         $args = array(
-        'role__in' => array( "s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4" )
-        ); */
-        $args = $this->ah_card_get_roles();
+        'role__in' => $this->ah_card_get_roles()); 
         
         $user_query = new WP_User_Query( $args );
 
@@ -291,12 +289,9 @@ class Ah_Card_Admin {
             $this->ah_card_setpro($this_id);
         }
     }
-    
-    
-    
-    
+        
     private function ah_card_list_roles(){ 
-    ?>
+?>
         <table class="wp-list-table widefat fixed striped users" style="width:300px;"  cellspacing="0">
             <thead>
                 <tr>
@@ -334,11 +329,10 @@ class Ah_Card_Admin {
     </tbody></table> <?php
         
         
-        var_dump(ah_card_get_roles());
+        var_dump($this->ah_card_get_roles());
     }
 
     public function ah_card_get_roles() {
-        
         $rolestring = get_option( 'ah-card-roles' );
         
         $rolearray = explode(",", $rolestring);
@@ -346,4 +340,5 @@ class Ah_Card_Admin {
         return $rolearray;
         
     }
+    
 }

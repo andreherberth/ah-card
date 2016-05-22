@@ -73,7 +73,7 @@ class Ah_Card_Public {
 		 * class.
 		 */
         
-        if(file_exists ( get_stylesheet_directory() . ah-card-public.css )) {
+        if(file_exists ( get_stylesheet_directory() . 'ah-card-public.css' )) {
             wp_enqueue_style( $this->plugin_name, get_stylesheet_directory_uri() . '/ah-card-public.css', array(), $this->version, 'all' );
         } else {
             wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/ah-card-public.css', array(), $this->version, 'all' );
