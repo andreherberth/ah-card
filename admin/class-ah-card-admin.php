@@ -127,8 +127,27 @@ class Ah_Card_Admin {
 
     public function ah_card_update_settings() {
         register_setting( 'ah-card-admin-settings', 'ah-card-name' );
-        register_setting( 'ah-card-admin-settings', 'ah-card-roles' );
+        register_setting( 'ah-card-admin-settings', 'ah-card-roles', array(&$this, 'ah_card_admin_roleval') );
     }
+    
+    /**
+    *
+    * ah_card_admin_roleval removes unwanted characters from the roles option for this plugins. 
+    * This makes it easier to generate the array needed when hooking into role change event, and when syncing cardnumbers. 
+    *
+    **/
+    private function ah_card_admin_roleval($rolestring) {
+        
+        if(empty($rolestring)) {
+          $output = "no,roles,defined";             
+        } else {
+          $output = trim($rolestring);     
+        }   
+        
+        return $output;
+        
+    }
+    
     
     /*
 
@@ -139,9 +158,12 @@ class Ah_Card_Admin {
     public function ah_card_user_sync() {
 
         //Temporary workaround for S2Members. Will use plugin options soon.
+        /*
         $args = array(
         'role__in' => array( "s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4" )
-        );
+        ); */
+        $args = $this->ah_card_get_roles();
+        
         $user_query = new WP_User_Query( $args );
 
         $users = $user_query->get_results();
@@ -259,16 +281,20 @@ class Ah_Card_Admin {
 }
     
     public function ah_card_set_user_role($this_id, $role) {
-    
-        $ah_s2roles = array("s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4", "Contributor");
-
-        if (!in_array($role, $ah_s2roles)) {
-            //TODO: Add code that removes 
+        
+        // $ah_s2roles = array("s2member_level1", "s2member_level2", "s2member_level3", "s2member_level4", "Contributor");
+        $ah_rolearray = ah_card_get_roles();
+        if (!in_array($role, $ah_rolearray)) {
+            //TODO: Make sure dbfield Active is set to FALSE. To be used later. 
             delete_user_meta( $this_id, '_ah_card_number' );
         } else {
             $this->ah_card_setpro($this_id);
         }
     }
+    
+    
+    
+    
     private function ah_card_list_roles(){ 
     ?>
         <table class="wp-list-table widefat fixed striped users" style="width:300px;"  cellspacing="0">
@@ -306,7 +332,18 @@ class Ah_Card_Admin {
             }
         ?> 
     </tbody></table> <?php
+        
+        
+        var_dump(ah_card_get_roles());
     }
 
-
+    public function ah_card_get_roles() {
+        
+        $rolestring = get_option( 'ah-card-roles' );
+        
+        $rolearray = explode(",", $rolestring);
+        
+        return $rolearray;
+        
+    }
 }

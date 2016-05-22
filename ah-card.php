@@ -13,7 +13,7 @@
  * Plugin Name:       AH Card
  * Plugin URI:        https://github.com/andreherberth/ah-card
  * Description:       This Plugin lets a user Generate an unique card number for spesific roles.
- * Version:           0.8.1
+ * Version:           0.8.2
  * Author:            Andre Herberth
  * Author URI:        https://www.andreherberth.com
  * License:           GPL-2.0+

@@ -55,7 +55,8 @@ $tab = (!empty($_GET['tab']))? esc_attr($_GET['tab']) : 'welcome';
                 <?php submit_button(); ?>
               </form>
             <div><h1>List of Available Roles:</h1></div>
-            <?php $this->ah_card_list_roles(); ?>
+            <?php $this->ah_card_list_roles(); 
+            ?>
             
         </div>
         <?php } elseif ($tab == 'sync' ) { ?>
