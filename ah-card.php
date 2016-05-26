@@ -12,10 +12,10 @@
  * @wordpress-plugin
  * Plugin Name:       AH Card
  * Plugin URI:        https://github.com/andreherberth/ah-card
- * Description:       This Plugin lets a user Generate an unique card number for spesific roles.
- * Version:           0.8.2
+ * Description:       This Plugin allows the generation of a Card number for members of spesified groups. 
+ * Version:           0.8.3
  * Author:            Andre Herberth
- * Author URI:        https://www.andreherberth.com
+ * Author URI:        https:/www.ourwp.net
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       ah-card

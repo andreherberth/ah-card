@@ -150,11 +150,16 @@ class Ah_Card {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Ah_Card_Admin( $this->get_plugin_name(), $this->get_version() );
-		
+        
+		// Load Adminside scripts
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+        
+        // Admin Pages
         $this->loader->add_action( 'admin_menu', $plugin_admin, 'ah_card_admin_menu' );
        	$this->loader->add_action( 'admin_init', $plugin_admin, 'ah_card_update_settings' );
+        
+        // User Sync Actions
         $this->loader->add_action( 'admin_footer', $plugin_admin, 'ah_card_sync_javascript' );
         $this->loader->add_action( 'wp_ajax_ah_card_user_sync', $plugin_admin, 'ah_card_user_sync' );    
         
@@ -182,7 +187,9 @@ class Ah_Card {
 		$plugin_public = new Ah_Card_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );        
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' ); 
+        
+        //Register Shortcode to display Users card information in the frontend. 
         $this->loader->add_action( 'init', $plugin_public, 'register_shortcodes' );
 	}
 
