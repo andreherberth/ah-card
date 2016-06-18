@@ -111,7 +111,6 @@ class Ah_Card_Public {
      * Allows
 	 *
 	 * @since    0.8.1
-<<<<<<< HEAD
 	 */  
     
      public function ah_card_role_verify( $user_id ) {
@@ -129,32 +128,18 @@ class Ah_Card_Public {
     }
     
     public function ah_card_profile_shortcode() {
-            // Utilizing template files and allowing edits in themes/child themes. 
-=======
-	 */
-    public function ah_card_profile_shortcode() {
         // Utilizing template files and allowing edits in themes/child themes.
->>>>>>> origin/master
 
        // if ( current_user_can('s2member_level1') || current_user_can('s2member_level2') || current_user_can('s2member_level3') || current_user_can('s2member_level4')) {
+        
             if ( $this->ah_card_role_verify( get_current_user_id() ) ) {
                 
                 if ( $overridden_template = locate_template( 'ah-card-pro-custom.php' ) ) {
 
-<<<<<<< HEAD
                     $output = load_template( $overridden_template );
-=======
-            if ( $overridden_template = locate_template( 'ah-card-pro-custom.php' ) ) {
-                load_template( $overridden_template );
-            }
-            else {
-                load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-pro.php' );
-            }
->>>>>>> origin/master
 
                 } else {
-
-<<<<<<< HEAD
+                    
                     $output = load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-pro.php' );
 
                 }
@@ -170,20 +155,11 @@ class Ah_Card_Public {
                       $output = load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-sub.php' );
                     
                 }
-=======
-            if ( $overridden_template = locate_template( 'ah-card-sub-custom.php' ) ) {
-                load_template( $overridden_template );
-            }
-            else {
-                load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-sub.php' );
-            }
->>>>>>> origin/master
-
+                
         }
         
         return $output;
     }
-<<<<<<< HEAD
     
     public function ah_card_numstring_shortcode() {
         
@@ -199,11 +175,7 @@ class Ah_Card_Public {
         
     }
 
-    public function register_shortcodes() {        
-=======
-
     public function register_shortcodes() {
->>>>>>> origin/master
         add_shortcode( 'ah-profile', array( $this, 'ah_card_profile_shortcode') );
         add_shortcode( 'ah-number', array( $this, 'ah_card_profile_shortcode') );
     }
