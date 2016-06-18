@@ -112,32 +112,70 @@ class Ah_Card_Public {
 	 *
 	 * @since    0.8.1
 	 */  
-    public function ah_card_profile_shortcode() {
-        // Utilizing template files and allowing edits in themes/child themes. 
-
-        if ( current_user_can('s2member_level1') || current_user_can('s2member_level2') || current_user_can('s2member_level3') || current_user_can('s2member_level4')) {
-
-            if ( $overridden_template = locate_template( 'ah-card-pro-custom.php' ) ) {
-                load_template( $overridden_template );
-            } 
-            else {
-                load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-pro.php' );
-            }
-
+    
+     public function ah_card_role_verify( $user_id ) {
+            
+        $rolestring = get_option( 'ah-card-roles' );
+        $rolearray = explode(",", $rolestring);
+        $user = get_userdata( $user_id );
+            
+        if ( in_array( $rolearray, $user->roles ) ) {
+            return TRUE;
+        } else {
+           return FALSE; 
         }
-        else {
-
-            if ( $overridden_template = locate_template( 'ah-card-sub-custom.php' ) ) {
-                load_template( $overridden_template );
-            } 
-            else {
-                load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-sub.php' );
-            }
-
-        }
+        
     }
     
+    public function ah_card_profile_shortcode() {
+            // Utilizing template files and allowing edits in themes/child themes. 
+
+       // if ( current_user_can('s2member_level1') || current_user_can('s2member_level2') || current_user_can('s2member_level3') || current_user_can('s2member_level4')) {
+            if ( $this->ah_card_role_verify( get_current_user_id() ) ) {
+                
+                if ( $overridden_template = locate_template( 'ah-card-pro-custom.php' ) ) {
+
+                    $output = load_template( $overridden_template );
+
+                } else {
+
+                    $output = load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-pro.php' );
+
+                }
+
+        } else {
+
+                if ( $overridden_template = locate_template( 'ah-card-sub-custom.php' ) ) {
+                    
+                      $output = load_template( $overridden_template );
+                    
+                } else {
+                    
+                      $output = load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-sub.php' );
+                    
+                }
+
+        }
+        
+        return $output;
+    }
+    
+    public function ah_card_numstring_shortcode() {
+        
+        $output = get_user_meta( get_current_user_id(), '_ah_card_number', true );
+        
+        if (empty ( $output) ) {
+            
+            $output = "Error: No Card Number";
+            
+        }
+        
+        return $output;
+        
+    }
+
     public function register_shortcodes() {        
         add_shortcode( 'ah-profile', array( $this, 'ah_card_profile_shortcode') );
+        add_shortcode( 'ah-number', array( $this, 'ah_card_profile_shortcode') );
     }
 }
