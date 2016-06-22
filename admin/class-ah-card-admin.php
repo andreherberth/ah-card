@@ -94,7 +94,7 @@ class Ah_Card_Admin {
 		 * The Ah_Card_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
-		 */
+		 */ 
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ah-card-admin.js', array( 'jquery' ), $this->version, false );
 

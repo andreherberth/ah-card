@@ -51,7 +51,7 @@ class Ah_Card_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/function-ah-card-verifyrole.php';
 	}
 
 	/**
@@ -113,34 +113,21 @@ class Ah_Card_Public {
 	 * @since    0.8.1
 	 */  
     
-     public function ah_card_role_verify( $user_id ) {
-            
-        $rolestring = get_option( 'ah-card-roles' );
-        $rolearray = explode(",", $rolestring);
-        $user = get_userdata( $user_id );
-            
-        if ( in_array( $rolearray, $user->roles ) ) {
-            return TRUE;
-        } else {
-           return FALSE; 
-        }
-        
-    }
     
     public function ah_card_profile_shortcode() {
         // Utilizing template files and allowing edits in themes/child themes.
 
        // if ( current_user_can('s2member_level1') || current_user_can('s2member_level2') || current_user_can('s2member_level3') || current_user_can('s2member_level4')) {
-        
-            if ( $this->ah_card_role_verify( get_current_user_id() ) ) {
+            ob_start();
+            if ( ah_card_role_verify( get_current_user_id() ) ) {
                 
                 if ( $overridden_template = locate_template( 'ah-card-pro-custom.php' ) ) {
 
-                    $output = load_template( $overridden_template );
+                    load_template( $overridden_template );
 
                 } else {
                     
-                    $output = load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-pro.php' );
+                    load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-pro.php' );
 
                 }
 
@@ -148,17 +135,21 @@ class Ah_Card_Public {
 
                 if ( $overridden_template = locate_template( 'ah-card-sub-custom.php' ) ) {
                     
-                      $output = load_template( $overridden_template );
+                      load_template( $overridden_template );
                     
                 } else {
                     
-                      $output = load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-sub.php' );
+                      load_template( plugin_dir_path( __FILE__ ) . 'partials/ah-card-sub.php' );
                     
                 }
                 
         }
         
-        return $output;
+        $output_string = ob_get_contents();
+        ob_end_clean();
+        
+        return $output_string;
+
     }
     
     public function ah_card_numstring_shortcode() {

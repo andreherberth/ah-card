@@ -95,13 +95,13 @@ class Ah_Card {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
+        
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ah-card-loader.php';
-
+        
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
@@ -120,7 +120,6 @@ class Ah_Card {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-ah-card-public.php';
 
 		$this->loader = new Ah_Card_Loader();
-
 	}
 
 	/**
