@@ -69,7 +69,7 @@ class Ah_Card {
 	public function __construct() {
 
 		$this->plugin_name = 'ah-card';
-		$this->version = '0.8.0';
+		$this->version = '0.8.5';
 
 		$this->load_dependencies();
 		$this->set_locale();
